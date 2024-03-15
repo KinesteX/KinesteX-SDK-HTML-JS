@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your App</title>
+</head>
+<body>
+    <div id="app" style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh;">
+        <button id="toggleWebView">Open KinesteX in WebView</button>
+        <div id="webViewContainer" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none;">
+            <iframe
+                id="webView"
+                src="https://kineste-x-w.vercel.app/"
+                frameborder="0"
+                allow="camera; microphone; autoplay"
+                sandbox="allow-same-origin allow-scripts"
+                allowfullscreen="true"
+                style="width: 100%; height: 100%;"
+            ></iframe>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
