@@ -14,14 +14,15 @@ https://github.com/V-m1r/KinesteX-B2B-AI-Fitness-and-Physio/assets/62508191/ac48
 | **Strength** | 
 | **Cardio** |
 | **Rehabilitation** | 
+| **Weight Management** | 
 
 
 ### Available categories and sub categories to sort workouts: 
 
-| **Category (key: category)** | **Sub-category (key: sub_category)** |
-| --- | --- |
-| **Fitness** | Stay Fit, Stretching, Cardio |
-| **Rehabilitation** | Back Relief, Knee Therapy, Neck Relief |
+| **Category (key: category)**  |
+| --- | 
+| **Fitness** |
+| **Rehabilitation**  |
 
 
 ## Available parameters:
