@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const postData = {
         userId: 'YOUR USER ID',
-        category: 'Fitness',
+        category: '', //leave empty if you wish not to display the workout categories
         planC: 'Cardio',
         company: 'YOUR COMPANY',
         key: 'YOUR API KEY',
@@ -22,14 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isVisible) {
             // Moved inside the click listener to ensure it's set every time the WebView is shown
             webView.onload = () => {
-                webView.contentWindow.postMessage(postData, 'https://kineste-x-w.vercel.app/');
+                webView.contentWindow.postMessage(postData, 'https://kinestex.vercel.app/');
             };
             webView.src += ''; // Trigger the reload of the iframe
         }
     });
 
     window.addEventListener('message', (event) => {
-        if (event.origin !== 'https://kineste-x-w.vercel.app') {
+        if (event.origin !== 'https://kinestex.vercel.app') {
             return;
         }
 
