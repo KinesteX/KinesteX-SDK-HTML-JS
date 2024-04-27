@@ -118,7 +118,7 @@ To listen to user events:
    <div id="webViewContainer" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none;">
             <iframe
                 id="webView"
-                src="https://kineste-x-w.vercel.app/"
+                src="https://kinestex.vercel.app/"
                 frameborder="0"
                 allow="camera; microphone; autoplay"
                 sandbox="allow-same-origin allow-scripts"
