@@ -17,7 +17,7 @@ https://github.com/V-m1r/KinesteX-B2B-AI-Fitness-and-Physio/assets/62508191/ac48
 | **Weight Management** | 
 
 
-### Available categories and sub categories to sort workouts: 
+### Available categories to sort workouts: 
 
 | **Category (key: category)**  |
 | --- | 
