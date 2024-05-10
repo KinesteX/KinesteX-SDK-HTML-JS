@@ -53,7 +53,7 @@ When presenting iframe, share the data in the following way:
         if (!isVisible) {
             // Moved inside the click listener to ensure it's set every time the WebView is shown
             webView.onload = () => {
-                webView.contentWindow.postMessage(postData, 'https://kineste-x-w.vercel.app/');
+                webView.contentWindow.postMessage(postData, 'https://kinestex.vercel.app/');
             };
             webView.src += ''; // Trigger the reload of the iframe
         }
@@ -65,7 +65,7 @@ To listen to user events:
 
   ```jsx
     window.addEventListener('message', (event) => {
-        if (event.origin !== 'https://kineste-x-w.vercel.app') {
+        if (event.origin !== 'https://kinestex.vercel.app/') {
             return;
         }
 
