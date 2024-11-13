@@ -33,7 +33,7 @@ https://github.com/V-m1r/KinesteX-B2B-AI-Fitness-and-Physio/assets/62508191/ac48
 ```
 
 ### Communicating with KinesteX:
-Currently supported communication is via HTTP postMessages. 
+Currently supported communication is via window postMessages. 
 When presenting iframe, share the data in the following way: 
 ```jsx
     const isVisible = webViewContainer.style.display !== 'none';
@@ -41,15 +41,15 @@ When presenting iframe, share the data in the following way:
     if (!isVisible) {
         // Moved inside the click listener to ensure it's set every time the WebView is shown
         webView.onload = () => {
-            webView.contentWindow.postMessage(postData, 'https://kinestex.vercel.app/');
+            webView.contentWindow.postMessage(postData, 'https://kinestex.vercel.app');
         };
-        webView.src += ''; // Trigger the reload of the iframe
+        webView.src = url; // Trigger the reload of the iframe with the specified url
     }
 ```
 To listen to user events: 
 ```jsx
     window.addEventListener('message', (event) => {
-        if (event.origin !== 'https://kinestex.vercel.app/') {
+        if (event.origin !== 'https://kinestex.vercel.app') {
             return;
         }
         try {
@@ -161,6 +161,21 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 ```
 
+## Displaying KinesteX through iframe in html:
+```html
+   <div id="webViewContainer" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none;">
+            <iframe
+                id="webView"
+                frameborder="0"
+                allow="camera; autoplay"
+                sandbox="allow-same-origin allow-scripts"
+                allowfullscreen="true"
+                style="width: 100%; height: 100%;"
+            ></iframe>
+        </div>
+
+```
+
 ## Contact:
 If you have any questions contact: help@kinestex.com
  **Message Types & Data**
@@ -187,21 +202,6 @@ If you have any questions contact: help@kinestex.com
 ------------------
 
 
-## Displaying KinesteX through iframe:
-```html
-   <div id="webViewContainer" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none;">
-            <iframe
-                id="webView"
-                src="https://kinestex.vercel.app/"
-                frameborder="0"
-                allow="camera; microphone; autoplay"
-                sandbox="allow-same-origin allow-scripts"
-                allowfullscreen="true"
-                style="width: 100%; height: 100%;"
-            ></iframe>
-        </div>
-
-```
 See App.js for demo code
 
 ------------------
