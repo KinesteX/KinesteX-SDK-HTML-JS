@@ -2,7 +2,6 @@
 ## Stay Ahead with KinesteX AI Motion Tracking.
 ### Easily transform your platform with our SDK: white-labeled workouts with precise motion tracking and real-time feedback tailored for accuracy and engagement
 
-
 https://github.com/V-m1r/KinesteX-B2B-AI-Fitness-and-Physio/assets/62508191/ac4817ca-9257-402d-81db-74e95060b153
 
 ## Configuration
@@ -15,7 +14,6 @@ https://github.com/V-m1r/KinesteX-B2B-AI-Fitness-and-Physio/assets/62508191/ac48
 | **Cardio** |
 | **Rehabilitation** | 
 | **Weight Management** | 
-
 
 ## Available parameters:
 ```jsx
@@ -33,38 +31,30 @@ https://github.com/V-m1r/KinesteX-B2B-AI-Fitness-and-Physio/assets/62508191/ac48
     gender: 'Male'
   };
 ```
+
 ### Communicating with KinesteX:
 Currently supported communication is via HTTP postMessages. 
-
 When presenting iframe, share the data in the following way: 
-
 ```jsx
     const isVisible = webViewContainer.style.display !== 'none';
-        webViewContainer.style.display = isVisible ? 'none' : 'block';
-
-        if (!isVisible) {
-            // Moved inside the click listener to ensure it's set every time the WebView is shown
-            webView.onload = () => {
-                webView.contentWindow.postMessage(postData, 'https://kinestex.vercel.app/');
-            };
-            webView.src += ''; // Trigger the reload of the iframe
-        }
-
+    webViewContainer.style.display = isVisible ? 'none' : 'block';
+    if (!isVisible) {
+        // Moved inside the click listener to ensure it's set every time the WebView is shown
+        webView.onload = () => {
+            webView.contentWindow.postMessage(postData, 'https://kinestex.vercel.app/');
+        };
+        webView.src += ''; // Trigger the reload of the iframe
+    }
 ```
-
-
 To listen to user events: 
-
-  ```jsx
+```jsx
     window.addEventListener('message', (event) => {
         if (event.origin !== 'https://kinestex.vercel.app/') {
             return;
         }
-
         try {
             const message = JSON.parse(event.data);
             console.log('Received data:', message);
-
             switch (message.type) {
                 case 'finished_workout':
                 case 'error_occured':
@@ -79,8 +69,100 @@ To listen to user events:
             console.error('Could not parse JSON message from WebView:', e);
         }
     });
-
 ```
+
+### Integration Options
+You can integrate KinesteX in different ways based on the selected option. Here are the available options:
+
+#### Complete User Experience
+```jsx
+const selectedOption = 'Complete User Experience';
+const url = 'https://kinestex.vercel.app';
+```
+
+#### Workout Plan
+```jsx
+const selectedOption = 'Workout Plan';
+const url = 'https://kinestex.vercel.app/plan/Full%20Cardio'; // replace with the plan you want to present
+postData.planC = 'Cardio'; // specify the category of the plans to be presented
+```
+
+#### Workout
+```jsx
+const selectedOption = 'Workout';
+const url = 'https://kinestex.vercel.app/workout/Fitness%20Lite'; // replace with the workout you want to display
+```
+
+#### Challenge
+```jsx
+const selectedOption = 'Challenge';
+const url = 'https://kinestex.vercel.app/challenge';
+postData.exercise = 'Squats'; // specify the exercise to be presented
+postData.countdown = 50; // specify the timer time for the challenge
+```
+
+### Example Code
+Here is an example of how to integrate KinesteX with the different options:
+
+```js
+document.addEventListener('DOMContentLoaded', () => {
+    const webViewContainer = document.getElementById('webViewContainer');
+    const webView = document.getElementById('webView');
+    const toggleButton = document.getElementById('toggleWebView');
+    const integrationOptions = document.getElementById('integrationOptions');
+
+    const postData = {
+        userId: 'YOUR USER ID',
+        key: 'YOUR API KEY',
+        company: 'YOUR COMPANY',
+        lifestyle: "Sedentary", // Active, or Very Active
+        age: 50,
+        height: 150,
+        weight: 200,
+        gender: 'Male'
+    };
+
+    integrationOptions.addEventListener('change', () => {
+        const selectedOption = integrationOptions.value;
+        toggleButton.textContent = `Start ${selectedOption}`;
+    });
+
+    toggleButton.addEventListener('click', () => {
+        const selectedOption = integrationOptions.value;
+        let url;
+        switch (selectedOption) {
+            case 'Complete User Experience':
+                url = 'https://kinestex.vercel.app';
+                break;
+            case 'Workout Plan':
+                url = 'https://kinestex.vercel.app/plan/Full%20Cardio'; // replace with the plan you want to present
+                postData.planC = 'Cardio'; // specify the category of the plans to be presented
+                break;
+            case 'Workout':
+                url = 'https://kinestex.vercel.app/workout/Fitness%20Lite'; // replace with the workout you want to display
+                break;
+            case 'Challenge':
+                url = 'https://kinestex.vercel.app/challenge';
+                postData.exercise = 'Squats'; // specify the exercise to be presented
+                postData.countdown = 50; // specify the timer time for the challenge
+                break;
+        }
+
+        const isVisible = webViewContainer.style.display !== 'none';
+        webViewContainer.style.display = isVisible ? 'none' : 'block';
+
+        if (!isVisible) {
+            webView.onload = () => {
+                webView.contentWindow.postMessage(postData, url);
+            };
+            webView.src = url; // Set the new URL for the iframe
+        }
+    });
+});
+```
+
+## Contact:
+If you have any questions contact: help@kinestex.com
  **Message Types & Data**
 
     
