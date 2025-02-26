@@ -30,7 +30,7 @@ You can use an `iframe` to display KinesteX within your platform. Here’s how:
     <iframe 
         id="webView" 
         frameborder="0"
-        allow="camera; autoplay"
+        allow="camera; microphone; autoplay; accelerometer; gyroscope; magnetometer"
         sandbox="allow-same-origin allow-scripts"
         allowfullscreen="true"
         style="width: 100%; height: 100%;"
