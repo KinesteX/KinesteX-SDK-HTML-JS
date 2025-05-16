@@ -46,16 +46,30 @@ const toggleButton = document.getElementById('toggleWebView'); // launch button
 
 const srcURL = "https://kinestex.vercel.app"; // default page -> it should change depending on feature you want to display (see `Next Steps`)
 
+function sendMessage() {
+      if (webView.contentWindow) {
+        webView.contentWindow.postMessage(postData, srcURL); // post initial data to start session
+      } else {
+        setTimeout(() => {
+          try {
+            webView.contentWindow.postMessage(postData, srcURL); // post initial data to start session
+          } catch {
+            webView.contentWindow.postMessage(postData, srcURL); // retry sending message
+          }
+        }, 100);
+      }
+}
+
 toggleButton.addEventListener('click', () => {
     const isVisible = webViewContainer.style.display !== 'none';
     webViewContainer.style.display = isVisible ? 'none' : 'block';
 
     if (!isVisible) {
+        webView.src = srcURL; // Update this URL for specific features
 
         webView.onload = () => {
-            webView.contentWindow.postMessage(postData, srcURL); // post initial data to start session
+           sendMessage();
         };
-        webView.src = srcURL; // Update this URL for specific features
     }
 });
 ```
@@ -68,6 +82,9 @@ window.addEventListener('message', (event) => {
     try {
         const message = JSON.parse(event.data);
         switch (message.type) {
+            case 'kinestex_loaded': 
+                sendMessage(); // send message once KinesteX DOM is ready, webview onload can sometimes fire too early on iOS
+                break;
             case 'exercise_completed':
                 console.log('Exercise completed:', message.data);
                 break;
