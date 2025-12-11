@@ -32,18 +32,15 @@ You can use an `iframe` to display KinesteX within your platform. Here’s how:
 
 ```html
 <!-- Fullscreen iframe contrainer -->
-<div
-  id="webViewContainer"
-  style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none;"
->
-  <iframe
-    id="webView"
-    frameborder="0"
-    allow="camera; autoplay"
-    sandbox="allow-same-origin allow-scripts"
-    allowfullscreen="true"
-    style="width: 100%; height: 100%;"
-  ></iframe>
+<div id="webViewContainer" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none;">
+    <iframe 
+        id="webView" 
+        frameborder="0"
+        allow="camera; autoplay; accelerometer; gyroscope; magnetometer"
+        sandbox="allow-same-origin allow-scripts"
+        allowfullscreen="true"
+        style="width: 100%; height: 100%;"
+    ></iframe>
 </div>
 ```
 
@@ -58,16 +55,31 @@ const toggleButton = document.getElementById("toggleWebView"); // launch button
 
 const srcURL = "https://ai.kinestex.com"; // default page -> it should change depending on feature you want to display (see `Next Steps`)
 
-toggleButton.addEventListener("click", () => {
-  const isVisible = webViewContainer.style.display !== "none";
-  webViewContainer.style.display = isVisible ? "none" : "block";
+function sendMessage() {
+      if (webView.contentWindow) {
+        webView.contentWindow.postMessage(postData, srcURL); // post initial data to start session
+      } else {
+        setTimeout(() => {
+          try {
+            webView.contentWindow.postMessage(postData, srcURL); // post initial data to start session
+          } catch {
+            webView.contentWindow.postMessage(postData, srcURL); // retry sending message
+          }
+        }, 100);
+      }
+}
 
-  if (!isVisible) {
-    webView.onload = () => {
-      webView.contentWindow.postMessage(postData, srcURL); // post initial data to start session
-    };
-    webView.src = srcURL; // Update this URL for specific features
-  }
+toggleButton.addEventListener('click', () => {
+    const isVisible = webViewContainer.style.display !== 'none';
+    webViewContainer.style.display = isVisible ? 'none' : 'block';
+
+    if (!isVisible) {
+        webView.src = srcURL; // Update this URL for specific features
+
+        webView.onload = () => {
+           sendMessage();
+        };
+    }
 });
 ```
 
@@ -79,21 +91,27 @@ KinesteX provides real-time feedback by sending messages through postMessages. H
 window.addEventListener("message", (event) => {
   if (event.origin !== srcURL) return; // prevent listening for messages from other sources for security
 
-  try {
-    const message = JSON.parse(event.data);
-    switch (message.type) {
-      case "exercise_completed":
-        console.log("Exercise completed:", message.data);
-        break;
-      case "plan_unlocked":
-        console.log("Workout plan unlocked:", message.data);
-        break;
-      case "exit_kinestex":
-        webViewContainer.style.display = "none";
-        break;
-      // see `Next Steps` for more data points
-      default:
-        console.log("Unhandled message:", message);
+    try {
+        const message = JSON.parse(event.data);
+        switch (message.type) {
+            case 'kinestex_loaded': 
+                sendMessage(); // send message once KinesteX DOM is ready, webview onload can sometimes fire too early on iOS
+                break;
+            case 'exercise_completed':
+                console.log('Exercise completed:', message.data);
+                break;
+            case 'plan_unlocked':
+                console.log('Workout plan unlocked:', message.data);
+                break;
+            case 'exit_kinestex':
+                webViewContainer.style.display = 'none';
+                break;
+            // see `Next Steps` for more data points
+            default:
+                console.log('Unhandled message:', message);
+        }
+    } catch (e) {
+        console.error('Failed to parse message:', e);
     }
   } catch (e) {
     console.error("Failed to parse message:", e);

@@ -17,6 +17,20 @@ document.addEventListener("DOMContentLoaded", () => {
     gender: "Male",
   };
 
+  function sendMessage(url) {
+    if (webView.contentWindow) {
+      webView.contentWindow.postMessage(postData, url);
+    } else {
+      setTimeout(() => {
+        try {
+          webView.contentWindow.postMessage(postData, url);
+        } catch {
+          webView.contentWindow.postMessage(postData, url);
+        }
+      }, 100);
+    }
+  }
+
   integrationOptions.addEventListener("change", () => {
     const selectedOption = integrationOptions.value;
     toggleButton.textContent = `Start ${selectedOption}`;
@@ -55,10 +69,10 @@ document.addEventListener("DOMContentLoaded", () => {
     webViewContainer.style.display = isVisible ? "none" : "block";
 
     if (!isVisible) {
+      webView.src = url;
       webView.onload = () => {
-        webView.contentWindow.postMessage(postData, url);
+        sendMessage(url);
       };
-      webView.src = url; // Set the new URL for the iframe
     }
   });
 
@@ -73,12 +87,16 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Received data:", message);
 
       switch (message.type) {
-        case "finished_workout":
-        case "error_occured":
-        case "exercise_completed":
-          console.log("Received data:", message.data);
+        case "kinestex_loaded":
+          sendMessage(webView.src);
           break;
-        case "exit_kinestex": // clicking on exit button, hide KinesteX
+        case "exercise_completed":
+          console.log("Exercise completed:", message.data);
+          break;
+        case "plan_unlocked":
+          console.log("Workout plan unlocked:", message.data);
+          break;
+        case "exit_kinestex":
           webViewContainer.style.display = "none";
           break;
         default:
