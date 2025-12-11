@@ -47,28 +47,49 @@ Complete code example for the `CAMERA` Integration Option:
 
       const srcURL = "https://ai.kinestex.com/camera";
 
+      function sendMessage() {
+        if (webView.contentWindow) {
+          webView.contentWindow.postMessage(postData, srcURL);
+        } else {
+          setTimeout(() => {
+            try {
+              webView.contentWindow.postMessage(postData, srcURL);
+            } catch {
+              webView.contentWindow.postMessage(postData, srcURL);
+            }
+          }, 100);
+        }
+      }
+
       startButton.addEventListener("click", () => {
         const isVisible = webViewContainer.style.display !== "none";
         webViewContainer.style.display = isVisible ? "none" : "block";
 
         if (!isVisible) {
-          webView.onload = () => {
-            webView.contentWindow.postMessage(postData, srcURL);
-          };
           webView.src = srcURL;
+          webView.onload = () => {
+            sendMessage();
+          };
         }
       });
+
       window.addEventListener("message", (event) => {
-        if (event.origin !== srcURL) return;
+        if (event.origin !== "https://ai.kinestex.com") return; // prevent listening for messages from other sources for security
 
         try {
           const message = JSON.parse(event.data);
           switch (message.type) {
+            case "kinestex_loaded":
+              sendMessage(); // send message once KinesteX DOM is ready
+              break;
             case "successful_repeat":
-              console.log("Exercise completed:", message.data);
+              console.log("Successful repeat:", message.data);
               break;
             case "mistake":
-              console.log("Workout plan unlocked:", message.data);
+              console.log("Mistake detected:", message.data);
+              break;
+            case "exit_kinestex":
+              webViewContainer.style.display = "none";
               break;
             default:
               console.log("Unhandled message:", message);

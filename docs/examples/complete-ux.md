@@ -37,7 +37,7 @@ Complete code example for the `Complete User Experience` Integration Option:
         key: "YOUR_API_KEY",
         style: "dark", // Style: dark, light
         planC: "Strength", // Plan category: Strength, Cardio, Rehabilitation, Weight Management
-        enableM4a: false // change to true to force use m4a for compatibility with iOS and setups where audio is not playing at all 
+        enableM4a: false, // change to true to force use m4a for compatibility with iOS and setups where audio is not playing at all
       };
 
       const webViewContainer = document.getElementById("webViewContainer");
@@ -45,23 +45,41 @@ Complete code example for the `Complete User Experience` Integration Option:
       const startButton = document.getElementById("startKinesteX");
       const srcURL = "https://ai.kinestex.com";
 
+      function sendMessage() {
+        if (webView.contentWindow) {
+          webView.contentWindow.postMessage(postData, srcURL);
+        } else {
+          setTimeout(() => {
+            try {
+              webView.contentWindow.postMessage(postData, srcURL);
+            } catch {
+              webView.contentWindow.postMessage(postData, srcURL);
+            }
+          }, 100);
+        }
+      }
+
       startButton.addEventListener("click", () => {
         const isVisible = webViewContainer.style.display !== "none";
         webViewContainer.style.display = isVisible ? "none" : "block";
 
         if (!isVisible) {
-          webView.onload = () => {
-            webView.contentWindow.postMessage(postData, srcURL);
-          };
           webView.src = srcURL;
+          webView.onload = () => {
+            sendMessage();
+          };
         }
       });
+
       window.addEventListener("message", (event) => {
-        if (event.origin !== srcURL) return; // prevent listening for messages from other sources for security
+        if (event.origin !== "https://ai.kinestex.com") return; // prevent listening for messages from other sources for security
 
         try {
           const message = JSON.parse(event.data);
           switch (message.type) {
+            case "kinestex_loaded":
+              sendMessage(); // send message once KinesteX DOM is ready
+              break;
             case "exercise_completed":
               console.log("Exercise completed:", message.data);
               break;

@@ -89,7 +89,7 @@ KinesteX provides real-time feedback by sending messages through postMessages. H
 
 ```js
 window.addEventListener("message", (event) => {
-  if (event.origin !== srcURL) return; // prevent listening for messages from other sources for security
+  if (event.origin !== "https://ai.kinestex.com") return; // prevent listening for messages from other sources for security
 
     try {
         const message = JSON.parse(event.data);
@@ -113,9 +113,6 @@ window.addEventListener("message", (event) => {
     } catch (e) {
         console.error('Failed to parse message:', e);
     }
-  } catch (e) {
-    console.error("Failed to parse message:", e);
-  }
 });
 ```
 
