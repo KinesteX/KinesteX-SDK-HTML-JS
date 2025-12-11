@@ -1,4 +1,5 @@
 Complete code example for the `PLAN` Integration Option:
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +43,7 @@ Complete code example for the `PLAN` Integration Option:
       const startButton = document.getElementById("startKinesteX");
 
       // link includes plan ID to display
-      const srcURL = "https://kinestex.vercel.app/plan/22B3qRU2r75hVXHgGiGx";
+      const srcURL = "https://ai.kinestex.com/plan/22B3qRU2r75hVXHgGiGx";
 
       startButton.addEventListener("click", () => {
         const isVisible = webViewContainer.style.display !== "none";
@@ -81,5 +82,4 @@ Complete code example for the `PLAN` Integration Option:
     </script>
   </body>
 </html>
-
 ```

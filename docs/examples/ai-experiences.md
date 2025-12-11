@@ -45,7 +45,7 @@ Complete code example for the `EXPERIENCE` Integration Option:
       const startButton = document.getElementById("startKinesteX");
 
       // link includes experience (training) to display
-      const srcURL = "https://kinestex.vercel.app/experiences/training";
+      const srcURL = "https://ai.kinestex.com/experiences/training";
 
       startButton.addEventListener("click", () => {
         const isVisible = webViewContainer.style.display !== "none";

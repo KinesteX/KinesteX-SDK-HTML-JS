@@ -27,21 +27,25 @@ document.addEventListener("DOMContentLoaded", () => {
     let url;
     switch (selectedOption) {
       case "Complete User Experience":
-        url = "https://kinestex.vercel.app";
+        url = "https://ai.kinestex.com";
         postData.planC = "Cardio"; // specify the category of the plans to be presented
         break;
       case "Workout Plan":
-        url = "https://kinestex.vercel.app/plan/Full%20Cardio"; // in the URL, replace with the plan you want to present
+        url = "https://ai.kinestex.com/plan/Full%20Cardio"; // in the URL, replace with the plan you want to present
         break;
       case "AI Experience":
-        url = "https://kinestex.vercel.app/experiences/training"; // in the URL, replace with the experience you want to present
+        url = "https://ai.kinestex.com/experiences/training"; // in the URL, replace with the experience you want to present
         postData.exercise = "Manual Handling"; // specify the exercise to be presented
         break;
       case "Workout":
-        url = "https://kinestex.vercel.app/workout/Fitness%20Lite"; // in the URL replace with the workout you want to display
+        url = "https://ai.kinestex.com/workout/Fitness%20Lite"; // in the URL replace with the workout you want to display
+        break;
+      case "Motion Analysis":
+        url = "https://ai.kinestex.com/camera"; // in the URL replace with the workout you want to display
+        postData.includeRawData = false; // specify if you want to include raw data
         break;
       case "Challenge":
-        url = "https://kinestex.vercel.app/challenge";
+        url = "https://ai.kinestex.com/challenge";
         postData.exercise = "Squats"; // specify the exercise to be presented
         postData.countdown = 50; // specify the timer time for the challenge
         break;
@@ -60,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("message", (event) => {
     // ensure data is received from KinesteX
-    if (event.origin !== "https://kinestex.vercel.app") {
+    if (event.origin !== "https://ai.kinestex.com") {
       return;
     }
 
@@ -76,6 +80,9 @@ document.addEventListener("DOMContentLoaded", () => {
           break;
         case "exit_kinestex": // clicking on exit button, hide KinesteX
           webViewContainer.style.display = "none";
+          break;
+        default:
+          console.log("Received data:", message);
           break;
       }
     } catch (e) {

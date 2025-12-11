@@ -1,4 +1,5 @@
 Complete code example for the `WORKOUT` Integration Option:
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +43,7 @@ Complete code example for the `WORKOUT` Integration Option:
       const startButton = document.getElementById("startKinesteX");
 
       // link includes workout ID to display
-      const srcURL = "https://kinestex.vercel.app/workout/9zE1kzOzpU5d5dAJrPOY";
+      const srcURL = "https://ai.kinestex.com/workout/9zE1kzOzpU5d5dAJrPOY";
 
       startButton.addEventListener("click", () => {
         const isVisible = webViewContainer.style.display !== "none";
@@ -81,5 +82,4 @@ Complete code example for the `WORKOUT` Integration Option:
     </script>
   </body>
 </html>
-
 ```

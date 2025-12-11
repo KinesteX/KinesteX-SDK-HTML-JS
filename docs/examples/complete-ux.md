@@ -1,4 +1,5 @@
 Complete code example for the `Complete User Experience` Integration Option:
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -36,12 +37,13 @@ Complete code example for the `Complete User Experience` Integration Option:
         key: "YOUR_API_KEY",
         style: "dark", // Style: dark, light
         planC: "Strength", // Plan category: Strength, Cardio, Rehabilitation, Weight Management
+        enableM4a: false // change to true to force use m4a for compatibility with iOS and setups where audio is not playing at all 
       };
 
       const webViewContainer = document.getElementById("webViewContainer");
       const webView = document.getElementById("webView");
       const startButton = document.getElementById("startKinesteX");
-      const srcURL = "https://kinestex.vercel.app";
+      const srcURL = "https://ai.kinestex.com";
 
       startButton.addEventListener("click", () => {
         const isVisible = webViewContainer.style.display !== "none";
@@ -80,5 +82,4 @@ Complete code example for the `Complete User Experience` Integration Option:
     </script>
   </body>
 </html>
-
 ```

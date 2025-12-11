@@ -11,16 +11,20 @@ Whenever a new ranking is available, the leaderboard automatically refreshes to 
 ---
 
 # **LEADERBOARD Integration Example**
-### 1. Add `exercise` field to `postData`: 
+
+### 1. Add `exercise` field to `postData`:
+
 ```ts
 const postData = {
- // ... all initial fields
-  exercise: 'Squats', // name or ID of the exercise to display in the leaderboard
+  // ... all initial fields
+  exercise: "Squats", // name or ID of the exercise to display in the leaderboard
 };
 ```
+
 ### 2. Select `LEADERBOARD` IntegrationOption:
+
 ```js
-const srcURL = `https://kinestex.vercel.app/leaderboard/?userId=${userId}`; // userId you want to highlight in the leaderboard
+const srcURL = `https://ai.kinestex.com/leaderboard/?userId=${userId}`; // userId you want to highlight in the leaderboard
 ```
 
 # Next steps:

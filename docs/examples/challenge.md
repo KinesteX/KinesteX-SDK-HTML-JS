@@ -46,7 +46,7 @@ Complete code example for the `CHALLENGE` Integration Option:
       const webView = document.getElementById("webView");
       const startButton = document.getElementById("startKinesteX");
 
-      const srcURL = "https://kinestex.vercel.app/challenge";
+      const srcURL = "https://ai.kinestex.com/challenge";
 
       startButton.addEventListener("click", () => {
         const isVisible = webViewContainer.style.display !== "none";

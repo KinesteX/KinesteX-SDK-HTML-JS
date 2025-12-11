@@ -5,11 +5,11 @@ With this integration option we displays 3 best workout plans based on the provi
 Available Categories to Sort Plans
 
 | **Plan Category (key: planC)** |
-| ------------------------------------- |
-| **Strength**                          |
-| **Cardio**                            |
-| **Weight Management**                 |
-| **Rehabilitation**                    |
+| ------------------------------ |
+| **Strength**                   |
+| **Cardio**                     |
+| **Weight Management**          |
+| **Rehabilitation**             |
 
 ## Displaying the main view:
 
@@ -18,14 +18,14 @@ Available Categories to Sort Plans
 ```ts
 const postData = {
   // ... all initial fields
-  planC: 'Strength', // Plan category (e.g., Strength, Cardio, Rehabilitation, Weight Management)
+  planC: "Strength", // Plan category (e.g., Strength, Cardio, Rehabilitation, Weight Management)
 };
 ```
 
 ### 2. Change srcURL to display the view:
 
 ```js
-const srcURL = "https://kinestex.vercel.app";
+const srcURL = "https://ai.kinestex.com";
 ```
 
 # Next steps:

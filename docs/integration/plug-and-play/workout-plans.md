@@ -9,12 +9,15 @@
 You can find workout plans in our library [here](https://workout-view.kinestex.com/), or create your own plans in our [admin portal](https://admin.kinestex.com).
 
 # **PLAN Integration Example**
+
 Change the `srcURL`
+
 ```js
-const srcURL = `https://kinestex.vercel.app/plan/${planID}`; // replace with the plan id you want to display
+const srcURL = `https://ai.kinestex.com/plan/${planID}`; // replace with the plan id you want to display
 ```
 
 # Next steps:
+
 - ### [View handleMessage available data points](../../data.md)
 - ### [View complete code example](../../examples/plans.md)
 - ### [Explore more integration options](../overview.md)

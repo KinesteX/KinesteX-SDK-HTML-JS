@@ -45,7 +45,7 @@ Complete code example for the `CAMERA` Integration Option:
       const webView = document.getElementById("webView");
       const startButton = document.getElementById("startKinesteX");
 
-      const srcURL = "https://kinestex.vercel.app/camera";
+      const srcURL = "https://ai.kinestex.com/camera";
 
       startButton.addEventListener("click", () => {
         const isVisible = webViewContainer.style.display !== "none";
